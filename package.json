@@ -1,0 +1,14 @@
+{
+  "name": "discord-translate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/CasYuY/discord-translate.git",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  }
+}
