@@ -1,14 +1,26 @@
 {
-  "name": "discord-translate",
+  "name": "discord-translation",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/CasYuY/discord-translate.git",
-  "license": "MIT",
-  "devDependencies": {
-    "typescript": "^5.8.3"
+  "description": "Discord translation app",
+  "main": "src/app.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18.x"
   },
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node src/app.js",
+    "register": "node src/commands.js",
+    "dev": "nodemon src/app.js"
+  },
+  "author": "Shay DeWael",
+  "license": "MIT",
+  "dependencies": {
+    "discord-interactions": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }
