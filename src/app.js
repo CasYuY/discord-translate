@@ -47,7 +47,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
             {
               type: MessageComponentTypes.TEXT_DISPLAY,
               // Fetches a random emoji to send from a helper function
-              content: `test v3 translation ${getRandomEmoji()}`
+              content: `test v1.4 translation ${getRandomEmoji()}`
             }
           ]
         },
