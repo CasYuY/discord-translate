@@ -3,7 +3,7 @@ import "dotenv/config";
 // Simple test command
 const COMMANDS = [
   {
-    name: "test",
+    name: "translate",
     type: 3,
   },
 ];

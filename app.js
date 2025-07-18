@@ -4,7 +4,6 @@ import {
   InteractionResponseFlags,
   InteractionResponseType,
   InteractionType,
-  MessageComponentTypes,
   verifyKeyMiddleware,
 } from "discord-interactions";
 import { getRandomEmoji } from "./utils/utils.js";
@@ -25,20 +24,14 @@ app.post(
     if (type === InteractionType.APPLICATION_COMMAND) {
       const { name } = data;
 
-      // "test" command
-      if (name === "test") {
+      // "translate" command
+      if (name === "translate") {
         // Send a message into the channel where command was triggered from
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-            components: [
-              {
-                type: MessageComponentTypes.TEXT_DISPLAY,
-                // Fetches a random emoji to send from a helper function
-                content: `test v1.10 translation ${getRandomEmoji()}`,
-              },
-            ],
+            flags: InteractionResponseFlags.EPHEMERAL,
+            content: `translate v1.11 translation ${getRandomEmoji()}`,
           },
         });
       }
