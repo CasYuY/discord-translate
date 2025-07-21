@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import {
-  InteractionResponseFlags,
   InteractionResponseType,
   InteractionType,
   verifyKeyMiddleware,
@@ -28,9 +27,8 @@ app.post(
       const { name } = data;
 
       // "translate" command
-      if (name === "translate") {
-        // Send a message into the channel where command was triggered from
-
+      if (name === "trans`late") {
+        // deferred response
         res.send({ type: 5 });
 
         const message = await GetSelectedMessage(
@@ -46,6 +44,7 @@ app.post(
         });
         console.log("response", response.text);
 
+        // send response
         return axios.post(
           `https://discord.com/api/v10/webhooks/${application_id}/${token}`,
           {
@@ -66,15 +65,3 @@ app.post(
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);
 });
-
-// import OpenAI from "openai";
-
-// const client = new OpenAI();
-// const response = await client.responses.create({
-//   model: "gpt-4.1",
-//   input: "Write a one-sentence bedtime story about a unicorn.",
-// });
-
-// console.log(response.output_text);
-
-// The client gets the API key from the environment variable `GEMINI_API_KEY`.

@@ -8,7 +8,7 @@ export async function GetSelectedMessage(channelId, messageId, botToken) {
 
   try {
     const response = await axios.get(url, { headers });
-    return response.data; // This is one message object
+    return response.data;
   } catch (err) {
     console.error(
       "Error fetching single message:",
