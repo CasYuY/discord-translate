@@ -27,7 +27,7 @@ app.post(
       const { name } = data;
 
       // "translate" command
-      if (name === "trans`late") {
+      if (name === "translate") {
         // deferred response
         res.send({ type: 5 });
 
@@ -36,6 +36,15 @@ app.post(
           data.target_id,
           process.env.DISCORD_TOKEN,
         );
+
+        if (message === null) {
+          return axios.post(
+            `https://discord.com/api/v10/webhooks/${application_id}/${token}`,
+            {
+              content: "Error fetching message",
+            },
+          );
+        }
         console.log("message", message.content);
 
         const response = await ai.models.generateContent({

@@ -14,6 +14,6 @@ export async function GetSelectedMessage(channelId, messageId, botToken) {
       "Error fetching single message:",
       err.response?.data || err.message,
     );
-    throw err;
+    return null;
   }
 }
