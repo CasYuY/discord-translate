@@ -6,19 +6,19 @@ import {
   InteractionType,
   verifyKeyMiddleware,
 } from "discord-interactions";
-import { getRandomEmoji } from "./utils/utils.js";
-import OpenAI from "openai";
-
-const client = new OpenAI();
+import { GetSelectedMessage } from "./utils/utils.js";
+import { GoogleGenAI } from "@google/genai";
+import axios from "axios";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ai = new GoogleGenAI({});
 
 app.post(
   "/interactions",
   verifyKeyMiddleware(process.env.PUBLIC_KEY),
   async function (req, res) {
-    const { type, data } = req.body;
+    const { application_id, type, data, channel, token } = req.body;
 
     if (type === InteractionType.PING) {
       return res.send({ type: InteractionResponseType.PONG });
@@ -30,13 +30,28 @@ app.post(
       // "translate" command
       if (name === "translate") {
         // Send a message into the channel where command was triggered from
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            flags: InteractionResponseFlags.EPHEMERAL,
-            content: `translate v1.11 translation ${getRandomEmoji()}`,
-          },
+
+        res.send({ type: 5 });
+
+        const message = await GetSelectedMessage(
+          channel.id,
+          data.target_id,
+          process.env.DISCORD_TOKEN,
+        );
+        console.log("message", message.content);
+
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `translate the following message to chinese: ${message.content}`,
         });
+        console.log("response", response.text);
+
+        return axios.post(
+          `https://discord.com/api/v10/webhooks/${application_id}/${token}`,
+          {
+            content: response.text,
+          },
+        );
       }
 
       console.error(`unknown command: ${name}`);
@@ -52,9 +67,14 @@ app.listen(PORT, () => {
   console.log("Listening on port", PORT);
 });
 
-const response = await client.responses.create({
-  model: "gpt-4.1",
-  input: "Write a one-sentence bedtime story about a unicorn.",
-});
+// import OpenAI from "openai";
 
-console.log(response.output_text);
+// const client = new OpenAI();
+// const response = await client.responses.create({
+//   model: "gpt-4.1",
+//   input: "Write a one-sentence bedtime story about a unicorn.",
+// });
+
+// console.log(response.output_text);
+
+// The client gets the API key from the environment variable `GEMINI_API_KEY`.
